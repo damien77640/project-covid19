@@ -1,7 +1,47 @@
 <!DOCTYPE html>
 <script src="./js/riot_compiler.min.js"></script>
 <script src="./node_modules/chart.js/dist/Chart.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 <html>
+
+    <script>
+        export default {
+          onBeforeMount(props, state) {
+            // initial state
+            this.state = {
+              items: props.items,
+              text: ''
+            }
+          },
+          edit(e) {
+            // update only the text state
+            this.update({
+              text: e.target.value
+            })
+          },
+          add(e) {
+            e.preventDefault()
+    
+            if (this.state.text) {
+              this.update({
+                items: [
+                  ...this.state.items,
+                  // add a new item
+                  {title: this.state.text}
+                ],
+                text: ''
+              })
+            }
+          },
+          toggle(item) {
+            item.done = !item.done
+            // trigger a component update
+            this.update()
+          }
+        }
+      </script>
+<script src="main.js"></script>
 
 <head>
     <title>covid19</title>
@@ -13,7 +53,13 @@
 </head>
 
 <body>
-    <h1>Wouhou vive le corona ! </h1>
+    <h1 class="">Wouhou vive le corona ! </h1>
+    <div class="">
+
+    </div>
+    <svg class="bi bi-alarm-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M5.5.5A.5.5 0 0 1 6 0h4a.5.5 0 0 1 0 1H9v1.07a7.002 7.002 0 0 1 3.537 12.26l.817.816a.5.5 0 0 1-.708.708l-.924-.925A6.967 6.967 0 0 1 8 16a6.967 6.967 0 0 1-3.722-1.07l-.924.924a.5.5 0 0 1-.708-.708l.817-.816A7.002 7.002 0 0 1 7 2.07V1H5.999a.5.5 0 0 1-.5-.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM13.5 1c-.753 0-1.429.333-1.887.86a8.035 8.035 0 0 1 3.527 3.527A2.5 2.5 0 0 0 13.5 1zm-5 4a.5.5 0 0 0-1 0v3.882l-1.447 2.894a.5.5 0 1 0 .894.448l1.5-3A.5.5 0 0 0 8.5 9V5z"/>
+    </svg>
 </body>
 
 </html>
