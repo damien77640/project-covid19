@@ -22,7 +22,7 @@
           },
           add(e) {
             e.preventDefault()
-    
+
             if (this.state.text) {
               this.update({
                 items: [
@@ -46,6 +46,7 @@
 <head>
     <meta charset="utf-8">
     <title>Covid19</title>
+    <div id="date"></div>
 </head>
 
 <body>
@@ -54,6 +55,11 @@
     <h1>Stat du corona</h1>
     <div id="stylé"></div>
 
+    <div>
+      <table id="tablocovid">
+        
+      </table>
+    </div>
     <script src="ajax.js"></script>
     <script src="client.js"></script>
 </body>
