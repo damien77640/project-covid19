@@ -4,6 +4,10 @@
 <head>
     <meta charset="utf-8">
     <title>Covid19</title>
+    <script src="ajax.js"></script>
+    <script src="client.js"></script>
+    <script src="localdb.js"></script>
+    <script src="localstoragedb.js"></script>
 </head>
 
 <body>
@@ -11,9 +15,10 @@
 
     <h1>Stat du corona</h1>
     <div id="stylé"></div>
-
-    <script src="ajax.js"></script>
-    <script src="client.js"></script>
+        <script>
+            createdb();
+            selectcountries();
+        </script>
 </body>
 
 </html>
