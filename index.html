@@ -14,7 +14,6 @@
     <script src="https://unpkg.com/@riotjs/route/route.js"></script>
     <script type="riot" src="./riot/app.riot"></script>
     <script type="riot" src="./riot/tablo.riot"></script>
-    <div id="date"></div>
     <script src="ajax.js"></script>
     <script src="client.js"></script>
     <script src="localdb.js"></script>
@@ -23,6 +22,8 @@
 
 <body>
   <app></app>
+  <div id="date"></div>
+  
   <script>
       riot.register('router', route.Router)
       riot.register('route', route.Route)

@@ -16,16 +16,17 @@ selectcountries = () => {
     const lib = new localStorageDB("covid19", localStorage);
     let bool = false;
     let resQuery = lib.queryAll('todate');
-            let datesnow = new Date(resQuery[0].date);
-            console.log("datesnow", datesnow);
-            let dateresQuery = datesnow.getHours();
-            console.log("dateresQuery", dateresQuery);
+    console.log(resQuery);
+    let datesnow = new Date(resQuery[0].date);
+    console.log("datesnow", datesnow);
+    let dateresQuery = datesnow.getHours();
+    console.log("dateresQuery", dateresQuery);
 
-            let date = new Date;
-            let getHoursNow = date.getHours();    //comparés par rapport au jour aussi
-            console.log("getHoursNow", getHoursNow);
-            let testhours = getHoursNow - dateresQuery;
-            console.log("il y a nb heures d'écoulés : ", testhours);
+    let date = new Date;
+    let getHoursNow = date.getHours();    //comparés par rapport au jour aussi
+    console.log("getHoursNow", getHoursNow);
+    let testhours = getHoursNow - dateresQuery;
+    console.log("il y a nb heures d'écoulés : ", testhours);
 
     if (testhours >= 6 ) {
         bool = true;

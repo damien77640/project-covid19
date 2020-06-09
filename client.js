@@ -1,4 +1,3 @@
-let data;
 ajaxGet("https://api.covid19api.com/summary", function (reponse) {
     data = JSON.parse(reponse);
     document.getElementById("date").innerHTML = Date();
@@ -36,7 +35,6 @@ ajaxGet("https://api.covid19api.com/summary", function (reponse) {
         tr = document.createElement('tr');
         tr.setAttribute('class','table-row');
         Object.entries(obj).forEach(([key, value]) => {
-            console.log(value);
             let td = document.createElement('td');
             td.innerText = `${value}`;
             tr.appendChild(td);
