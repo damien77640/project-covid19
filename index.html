@@ -1,5 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
+  <script src="./js/riot_compiler.min.js"></script>
+  <script src="./node_modules/chart.js/dist/Chart.js"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 <html>
+
+    <script>
+        export default {
+          onBeforeMount(props, state) {
+            // initial state
+            this.state = {
+              items: props.items,
+              text: ''
+            }
+          },
+          edit(e) {
+            // update only the text state
+            this.update({
+              text: e.target.value
+            })
+          },
+          add(e) {
+            e.preventDefault()
+
+            if (this.state.text) {
+              this.update({
+                items: [
+                  ...this.state.items,
+                  // add a new item
+                  {title: this.state.text}
+                ],
+                text: ''
+              })
+            }
+          },
+          toggle(item) {
+            item.done = !item.done
+            // trigger a component update
+            this.update()
+          }
+        }
+      </script>
+<script src="main.js"></script>
 
 <head>
     <meta charset="utf-8">
