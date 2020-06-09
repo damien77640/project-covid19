@@ -14,11 +14,12 @@ ajaxGet("https://api.covid19api.com/summary", function (reponse) {
 
     let table = document.getElementById("tablocovid");
     let tr = document.createElement('tr');
+    tr.setAttribute('class', 'table-row');
     let text = "";
+    let i = 0;
     Object.entries(data.Countries[0]).forEach(([key, value]) => {
-        text += "<th onclick=\"sortTable('"+key+"')\">"+key+"</th>";
-
-
+        text += "<th onclick=\"sortTable('"+i+"')\">"+key+"</th>";
+        i++;
         // let th = document.createElement('th');
         // th.onclick = sortTable(key);
 
@@ -33,6 +34,7 @@ ajaxGet("https://api.covid19api.com/summary", function (reponse) {
 
     data.Countries.forEach(obj => {
         tr = document.createElement('tr');
+        tr.setAttribute('class','table-row');
         Object.entries(obj).forEach(([key, value]) => {
             console.log(value);
             let td = document.createElement('td');
@@ -102,12 +104,14 @@ function sortTable(n) {
     }
 }
 
-function sortation(key) {
-    const ordered = {};
-    Object.keys(data.Countries).sort().forEach(function (key) {
-        ordered[key] = data.Countries[key];
-    });
-    console.log(ordered);
 
-    return ordered;
-}
+
+// function sortation(key) {
+//     const ordered = {};
+//     Object.keys(data.Countries).sort().forEach(function (key) {
+//         ordered[key] = data.Countries[key];
+//     });
+//     console.log(ordered);
+
+//     return ordered;
+// }

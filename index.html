@@ -1,62 +1,37 @@
 <!DOCTYPE html>
-  <script src="./js/riot_compiler.min.js"></script>
-  <script src="./node_modules/chart.js/dist/Chart.js"></script>
-  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  
+  
 <html>
-
-    <script>
-        export default {
-          onBeforeMount(props, state) {
-            // initial state
-            this.state = {
-              items: props.items,
-              text: ''
-            }
-          },
-          edit(e) {
-            // update only the text state
-            this.update({
-              text: e.target.value
-            })
-          },
-          add(e) {
-            e.preventDefault()
-
-            if (this.state.text) {
-              this.update({
-                items: [
-                  ...this.state.items,
-                  // add a new item
-                  {title: this.state.text}
-                ],
-                text: ''
-              })
-            }
-          },
-          toggle(item) {
-            item.done = !item.done
-            // trigger a component update
-            this.update()
-          }
-        }
-      </script>
-<script src="main.js"></script>
 
 <head>
     <meta charset="utf-8">
     <title>Covid19</title>
+    <script src="./node_modules/chart.js/dist/Chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
+    <script src="https://unpkg.com/@riotjs/route/route.js"></script>
+    <script type="riot" src="./riot/app.riot"></script>
+    <script type="riot" src="./riot/tablo.riot"></script>
     <div id="date"></div>
 </head>
 
 <body>
-    
+  <app></app>
+  <script>
+      riot.register('router', route.Router)
+      riot.register('route', route.Route)
 
-    <h1>Stat du corona</h1>
+      riot.compile().then(() => {
+          riot.mount('app');
+      })
+  </script>
+
     <div id="stylé"></div>
 
     <div>
-      <table id="tablocovid">
+      <table class="table table-bordered table-hover table-condensed table-striped" id="tablocovid">
         
       </table>
     </div>

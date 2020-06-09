@@ -1,3 +1,27 @@
 <app>
-  <p>{ props.message }</p>
+  <router base={base}>
+
+    <route path="#/tablo">
+      <tablo content={state.countries}></tablo>
+    </route>
+  </router>
+  <script>
+    const loc = window.location
+
+    export default {
+      base: `${loc.protocol}//${loc.host}${loc.pathname ? loc.pathname : '' }`,
+      state: {
+        countries: null,
+        types: null,
+        todate: null,
+        globalstats: null
+      },
+      onMounted(props, state) {
+        state.countries = ({
+          date: "1"
+        })
+        this.update()
+      }
+    }
+  </script>
 </app>
