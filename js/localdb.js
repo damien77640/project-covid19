@@ -1,4 +1,3 @@
-
 createdb = () => {
     const lib = new localStorageDB("covid19", localStorage);
 
@@ -21,28 +20,27 @@ selectsummary = () => {
     let getDaysNow = '';
     let testhours = '';
     let resQuery = lib.queryAll('todate');
-    if (resQuery[0] !== undefined ){
+    if (resQuery[0] !== undefined) {
         bool = false;
-    
-    // console.log("re", resQuery);
-    let datesnow = new Date(resQuery[0].date);
-    // console.log("datesnow", datesnow);
-    let dateresQuery = datesnow.getHours();
-     dayresQuery = datesnow.getDay();
-    // console.log("dayresQuery", dayresQuery);
-    // console.log("dateresQuery", dateresQuery);
 
-    let date = new Date;
-    let getHoursNow = date.getHours();
-    let getDaysNow = date.getDay();
-    // console.log("getHoursNow", getHoursNow);
-    // console.log("getDaysNow", getDaysNow);
-     testhours = getHoursNow - dateresQuery;
+        // console.log("re", resQuery);
+        let datesnow = new Date(resQuery[0].date);
+        // console.log("datesnow", datesnow);
+        let dateresQuery = datesnow.getHours();
+        dayresQuery = datesnow.getDay();
+        // console.log("dayresQuery", dayresQuery);
+        // console.log("dateresQuery", dateresQuery);
+
+        let date = new Date;
+        let getHoursNow = date.getHours();
+        let getDaysNow = date.getDay();
+        // console.log("getHoursNow", getHoursNow);
+        // console.log("getDaysNow", getDaysNow);
+        testhours = getHoursNow - dateresQuery;
     }
-    else if (dayresQuery !== getDaysNow) {
+    if (dayresQuery !== getDaysNow) {
         bool = false;
-    }
-    else if (testhours > 6) {
+    } else if (testhours > 6) {
         bool = false;
     }
     if (bool === true) {
@@ -51,23 +49,54 @@ selectsummary = () => {
             "url": "https://api.covid19api.com/summary",
             "method": "GET",
             "timeout": 0,
-          };
-          
-          $.ajax(settings).done(function (response) {
+        };
+
+        $.ajax(settings).done(function (response) {
             let data = response;
             // console.log("data",data);
             data.Countries.forEach(element => {
-                lib.deleteRows("countries");  // a changer avec un insertorupdate et voila
-                lib.insert("countries", { country: element.Country, countrycode: element.CountryCode, slug: element.Slug, newconfirmed: element.NewConfirmed, totalconfirmed: element.TotalConfirmed, newdeaths: element.NewDeaths, totaldeaths: element.TotalDeaths, newrecovered: element.NewRecovered, totalrecovered: element.TotalRecovered, date: element.Date });
+                // console.log("tazmer", element);
+                lib.insert("countries", {
+                    country: element.Country,
+                    countrycode: element.CountryCode,
+                    slug: element.Slug,
+                    newconfirmed: element.NewConfirmed,
+                    totalconfirmed: element.TotalConfirmed,
+                    newdeaths: element.NewDeaths,
+                    totaldeaths: element.TotalDeaths,
+                    newrecovered: element.NewRecovered,
+                    totalrecovered: element.TotalRecovered,
+                    date: element.Date
+                });
                 lib.commit();
             });
 
             lib.deleteRows("globalstat");
             lib.deleteRows("todate");
             lib.deleteRows("type");
-            lib.insert("globalstat", { newconfirmed: data.Global.NewConfirmed, totalconfirmed: data.Global.TotalConfirmed, newdeaths: data.Global.NewDeaths, totaldeaths: data.Global.TotalDeaths, newrecovered: data.Global.NewRecovered, totalrecovered: data.Global.TotalRecovered });
-            lib.insert("todate", { date: data.Date })
-            lib.insert("type", { "0": "string", "1": "string", "2": "string", "3": "number", "4": "number", "5": "number", "6": "number", "7": "number", "8": "number", "9": "string" });
+            lib.insert("globalstat", {
+                newconfirmed: data.Global.NewConfirmed,
+                totalconfirmed: data.Global.TotalConfirmed,
+                newdeaths: data.Global.NewDeaths,
+                totaldeaths: data.Global.TotalDeaths,
+                newrecovered: data.Global.NewRecovered,
+                totalrecovered: data.Global.TotalRecovered
+            });
+            lib.insert("todate", {
+                date: data.Date
+            })
+            lib.insert("type", {
+                "0": "string",
+                "1": "string",
+                "2": "string",
+                "3": "number",
+                "4": "number",
+                "5": "number",
+                "6": "number",
+                "7": "number",
+                "8": "number",
+                "9": "string"
+            });
             jsoncountries = lib.queryAll('countries');
             typedata = lib.queryAll("type");
             // console.log("countries",jsoncountries);
@@ -75,7 +104,8 @@ selectsummary = () => {
             bool = false;
 
         });
-    } if (bool === false) {
+    }
+    if (bool === false) {
         typedata = lib.queryAll('type');
         // console.log("typedata", typedata);
         jsoncountries = lib.queryAll('countries');
@@ -102,12 +132,18 @@ selectcountries = (namecountry) => {
         "url": "https://api.covid19api.com/total/country/" + namecountry,
         "method": "GET",
         "timeout": 0,
-      };
-      $.ajax(settings).done(function (response) {
+    };
+    $.ajax(settings).done(function (response) {
         let data = response;
         lib.deleteRows("selectcountry");
         data.forEach(element => {
-            lib.insert("selectcountry", { country: element.Country, confirmed: element.Confirmed, deaths: element.Deaths, recovered: element.Recovered, date: element.Date });
+            lib.insert("selectcountry", {
+                country: element.Country,
+                confirmed: element.Confirmed,
+                deaths: element.Deaths,
+                recovered: element.Recovered,
+                date: element.Date
+            });
             lib.commit();
         })
         let datacountry = lib.queryAll('selectcountry');
