@@ -13,29 +13,37 @@ createdb = () => {
         lib.createTable("todate", ["date"]);
         // lib.dropTable("countries");
         lib.createTable("type", ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
+        // lib.dropTable("countries");   
+        lib.createTable("selectcountry", ["country", "confirmed", "deaths", "recovered", "date"]);
         lib.commit();
     }
         // lib.dropTable("type");
 
 }
 
-selectcountries = () => {
+selectsummary = () => {
     const lib = new localStorageDB("covid19", localStorage);
     let bool = false;
     let resQuery = lib.queryAll('todate');
-    // console.log(resQuery);
     let datesnow = new Date(resQuery[0].date);
     // console.log("datesnow", datesnow);
     let dateresQuery = datesnow.getHours();
-    // console.log("dateresQuery", dateresQuery);
+    let dayresQuery = datesnow.getDay();
+    console.log("dayresQuery", dayresQuery);
+    console.log("dateresQuery", dateresQuery);
 
     let date = new Date;
-    let getHoursNow = date.getHours();    //comparés par rapport au jour aussi
-    // console.log("getHoursNow", getHoursNow);
+    let getHoursNow = date.getHours();
+    let getDaysNow = date.getDay();
+    console.log("getHoursNow", getHoursNow);
+    console.log("getDaysNow", getDaysNow);
     let testhours = getHoursNow - dateresQuery;
     // console.log("il y a nb heures d'écoulés : ", testhours);
 
-    if (testhours >= 6 ) {
+    if (dayresQuery !== getDaysNow) {
+        bool = true;
+    }
+    if (testhours > 6) {
         bool = true;
     }
     if (bool === true) {
@@ -43,7 +51,7 @@ selectcountries = () => {
             let data = JSON.parse(reponse);
             // console.log("data",data);
             data.Countries.forEach(element => {
-               // lib.deleteRows("countries");  // a changer avec un insertorupdate et voila
+                lib.deleteRows("countries");  // a changer avec un insertorupdate et voila
                 lib.insert("countries", { country: element.Country, countrycode: element.CountryCode, slug: element.Slug, newconfirmed: element.NewConfirmed, totalconfirmed: element.TotalConfirmed, newdeaths: element.NewDeaths, totaldeaths: element.TotalDeaths, newrecovered: element.NewRecovered, totalrecovered: element.TotalRecovered, date: element.Date });
                 lib.commit();
             });
@@ -72,11 +80,34 @@ selectcountries = () => {
         datesnow = new Date(resQuery[0].date);
         // console.log("datesnow", datesnow);
         let dateresQuery = datesnow.getHours();
-        // console.log("dateresQuery", dateresQuery);
-        let date = new Date;
-        let getHoursNow = date.getHours();
-        // console.log("getHoursNow", getHoursNow);
-        testhours = getHoursNow - dateresQuery;
-        // console.log("il y a nb heures d'écoulés : ", testhours);
+        console.log("dateresQuery", dateresQuery);
     }
+}
+
+selectcountries = (namecountry) => {
+    const lib = new localStorageDB("covid19", localStorage);
+    ajaxGet("https://api.covid19api.com/total/country/" + namecountry, function (reponse) {
+        let data = JSON.parse(reponse);
+        lib.deleteRows("selectcountry");
+        data.forEach(element => {
+            lib.insert("selectcountry", { country: element.Country, confirmed: element.Confirmed, deaths: element.Deaths, recovered: element.Recovered, date: element.Date });
+            lib.commit();
+        })
+        let datacountry = lib.queryAll('selectcountry');
+        console.log("datacountry",datacountry);
+
+        let confirmedyest = datacountry[0].confirmed;
+        let confirmtoday = datacountry[1].confirmed;
+        let deathyest = datacountry[0].deaths;
+        let deathtoday = datacountry[1].deaths;
+        let recoveredyest = datacountry[0].recovered;
+        let recoveredtoday = datacountry[1].recovered;
+
+        let totalconfirmed = confirmtoday - confirmedyest;
+        let totaldeath = deathtoday - deathyest;
+        let totalrecovered = recoveredtoday - recoveredyest;
+        console.log("totalconfirmed",totalconfirmed);
+        console.log("totaldeath",totaldeath);
+        console.log("totalrecovered",totalrecovered);
+    })
 }
