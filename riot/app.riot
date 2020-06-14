@@ -21,12 +21,14 @@
       onBeforeMount(props, state) {
         // before the component is mounted
         let test = selectsummary();
-        console.log("test"+test);
+        console.log("test" + test);
       },
       onMounted(props, state) {
         // right after the component is mounted on the page
-        let test = selectsummary();
-        console.log(test);
+        state.countries = ({
+          date: '1'
+        })
+        this.update();
       },
       onBeforeUpdate(props, state) {
         // allows recalculation of context data before the update

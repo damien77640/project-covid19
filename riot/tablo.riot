@@ -5,49 +5,72 @@
     </table>
     <script>
         let data;
-        // let blah = selectsummary();
-        // console.log(blah);
-        // ajaxGet("https://api.covid19api.com/summary", function (reponse) {
-        //     data = JSON.parse(reponse);
-        //     this.document.getElementById("date").innerHTML = Date();
-        //     // Récupération des données choisis
-        //     var newConfirmed = data.Global.NewConfirmed;
-        //     var totalConfirmed = data.Global.TotalConfirmed;
-        //     // Affichage des résultats
-        //     var element = this.document.createElement("div");
-        //     element.textContent = "Il y a eu nb mort au total : " + newConfirmed +
-        //         " et le nb de cas confirmé est de " + totalConfirmed;
 
-        //     let table = this.document.getElementById("tablocovid");
-        //     let tr = this.document.createElement('tr');
-        //     tr.setAttribute('class', 'table-row');
-        //     let text = "";
-        //     let i = 0;
-        //     Object.entries(data.Countries[0]).forEach(([key, value]) => {
-        //         lowkey = key.toLowerCase();
-        //         text += "<th onclick=\"sortTable('" + i + "','"+lowkey+"')\">" + key + "</th>";
-        //         i++;
-        //     });
-        //     tr.innerHTML = text;
-        //     table.appendChild(tr);
-
-        //     data.Countries.forEach(obj => {
-        //         tr = this.document.createElement('tr');
-        //         tr.setAttribute('class', 'table-row');
-        //         Object.entries(obj).forEach(([key, value]) => {
-        //             let td = this.document.createElement('td');
-        //             td.innerText = `${value}`;
-        //             tr.appendChild(td);
-        //         })
-        //         table.appendChild(tr);
-        //     });
-        // });
-
-
-        
         export default {
+            onBeforeMount(props, state) {
+                // before the component is mounted
+                console.log("bef");
+                let test = selectsummary();
+                console.log("test" + test);
+            },
             onMounted(props, state) {
+                console.log("monted");
 
+                // right after the component is mounted on the page
+                console.log("props", props);
+                let data = selectsummary();
+                this.document.getElementById("date").innerHTML = "tamer"
+                // window.onload = function () {
+                //     this.document.getElementById("date").innerHTML = Date();
+                //     // Récupération des données choisis
+                //     var newConfirmed = data.Global.NewConfirmed;
+                //     var totalConfirmed = data.Global.TotalConfirmed;
+                //     // Affichage des résultats
+                //     var element = this.document.createElement("div");
+                //     element.textContent = "Il y a eu nb mort au total : " + newConfirmed +
+                //         " et le nb de cas confirmé est de " + totalConfirmed;
+
+                //     let table = this.document.getElementById("tablocovid");
+                //     let tr = this.document.createElement('tr');
+                //     tr.setAttribute('class', 'table-row');
+                //     let text = "";
+                //     let i = 0;
+                //     Object.entries(data.Countries[0]).forEach(([key, value]) => {
+                //         lowkey = key.toLowerCase();
+                //         text += "<th onclick=\"sortTable('" + i + "','" + lowkey + "')\">" + key + "</th>";
+                //         i++;
+                //     });
+                //     tr.innerHTML = text;
+                //     table.appendChild(tr);
+
+                //     data.Countries.forEach(obj => {
+                //         tr = this.document.createElement('tr');
+                //         tr.setAttribute('class', 'table-row');
+                //         Object.entries(obj).forEach(([key, value]) => {
+                //             let td = this.document.createElement('td');
+                //             td.innerText = `${value}`;
+                //             tr.appendChild(td);
+                //         })
+                //         table.appendChild(tr);
+                //     });
+                // }
+
+            },
+            onBeforeUpdate(props, state) {
+                console.log("befUp");
+
+                // allows recalculation of context data before the update
+            },
+            onUpdated(props, state) {
+                console.log("Upda");
+
+                // right after the component template is updated after an update call
+            },
+            onBeforeUnmount(props, state) {
+                // before the component is removed
+            },
+            onUnmounted(props, state) {
+                // when the component is removed from the page
             }
         }
     </script>
