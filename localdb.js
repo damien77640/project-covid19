@@ -20,23 +20,30 @@ selectcountries = () => {
     let datesnow = new Date(resQuery[0].date);
     console.log("datesnow", datesnow);
     let dateresQuery = datesnow.getHours();
+    let dayresQuery = datesnow.getDay();
+    console.log("dayresQuery", dayresQuery);
     console.log("dateresQuery", dateresQuery);
 
     let date = new Date;
-    let getHoursNow = date.getHours();    //comparés par rapport au jour aussi
+    let getHoursNow = date.getHours();
+    let getDaysNow = date.getDay();    
     console.log("getHoursNow", getHoursNow);
+    console.log("getDaysNow", getDaysNow);
     let testhours = getHoursNow - dateresQuery;
     console.log("il y a nb heures d'écoulés : ", testhours);
 
-    if (testhours >= 6 ) {
+    if (dayresQuery !== getDaysNow){
+        bool = true;
+    }
+    if (testhours > 6  && testdays === 0 ) {
         bool = true;
     }
     if (bool === true) {
         ajaxGet("https://api.covid19api.com/summary", function (reponse) {
             let data = JSON.parse(reponse);
-            console.log("data",data);
+            console.log("requete api");
             data.Countries.forEach(element => {
-               // lib.deleteRows("countries");  // a changer avec un insertorupdate et voila
+                lib.deleteRows("countries");  // a changer avec un insertorupdate et voila
                 lib.insert("countries", { country: element.Country, countrycode: element.CountryCode, slug: element.Slug, newconfirmed: element.NewConfirmed, totalconfirmed: element.TotalConfirmed, newdeaths: element.NewDeaths, totaldeaths: element.TotalDeaths, newrecovered: element.NewRecovered, totalrecovered: element.TotalRecovered, date: element.Date });
                 lib.commit();
             });
@@ -66,10 +73,5 @@ selectcountries = () => {
         console.log("datesnow", datesnow);
         let dateresQuery = datesnow.getHours();
         console.log("dateresQuery", dateresQuery);
-        let date = new Date;
-        let getHoursNow = date.getHours();
-        console.log("getHoursNow", getHoursNow);
-        let testhours = getHoursNow - dateresQuery;
-        console.log("il y a nb heures d'écoulés : ", testhours);
     }
 }
