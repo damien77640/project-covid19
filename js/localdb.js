@@ -16,6 +16,7 @@ createdb = () => {
 selectsummary = () => {
     const lib = new localStorageDB("covid19", localStorage);
     let bool = true;
+    let typedata = '';
     let dayresQuery = '';
     let getDaysNow = '';
     let testhours = '';
@@ -23,19 +24,19 @@ selectsummary = () => {
     if (resQuery[0] !== undefined ){
         bool = false;
     
-    console.log("re", resQuery);
+    // console.log("re", resQuery);
     let datesnow = new Date(resQuery[0].date);
     // console.log("datesnow", datesnow);
     let dateresQuery = datesnow.getHours();
      dayresQuery = datesnow.getDay();
-    console.log("dayresQuery", dayresQuery);
-    console.log("dateresQuery", dateresQuery);
+    // console.log("dayresQuery", dayresQuery);
+    // console.log("dateresQuery", dateresQuery);
 
     let date = new Date;
     let getHoursNow = date.getHours();
     let getDaysNow = date.getDay();
-    console.log("getHoursNow", getHoursNow);
-    console.log("getDaysNow", getDaysNow);
+    // console.log("getHoursNow", getHoursNow);
+    // console.log("getDaysNow", getDaysNow);
      testhours = getHoursNow - dateresQuery;
     }
     else if (dayresQuery !== getDaysNow) {
@@ -67,31 +68,32 @@ selectsummary = () => {
             lib.insert("globalstat", { newconfirmed: data.Global.NewConfirmed, totalconfirmed: data.Global.TotalConfirmed, newdeaths: data.Global.NewDeaths, totaldeaths: data.Global.TotalDeaths, newrecovered: data.Global.NewRecovered, totalrecovered: data.Global.TotalRecovered });
             lib.insert("todate", { date: data.Date })
             lib.insert("type", { "0": "string", "1": "string", "2": "string", "3": "number", "4": "number", "5": "number", "6": "number", "7": "number", "8": "number", "9": "string" });
-            let jsoncountries = lib.queryAll('countries');
+            jsoncountries = lib.queryAll('countries');
+            typedata = lib.queryAll("type");
             // console.log("countries",jsoncountries);
             lib.commit();
             bool = false;
 
         });
     } if (bool === false) {
-        let typedata = lib.queryAll('type');
+        typedata = lib.queryAll('type');
         // console.log("typedata", typedata);
         jsoncountries = lib.queryAll('countries');
-        // console.log("jsoncountries", jsoncountries);
-        let jsonglobalstat = lib.queryAll('globalstat');
+        console.log("jsoncountries", jsoncountries);
+        jsonglobalstat = lib.queryAll('globalstat');
         // console.log("jsonglobalstat", jsonglobalstat);
 
-        let resQuery = lib.queryAll('todate');
+        resQuery = lib.queryAll('todate');
         datesnow = new Date(resQuery[0].date);
-        let dateresQuery = datesnow.getHours();
-        console.log("dateresQuery", dateresQuery);
+        dateresQuery = datesnow.getHours();
+        // console.log("dateresQuery", dateresQuery);
     }
 
-    // let retour = {
-    //     "countries": jsoncountries,
-    //     "type": typedata
-    // };
-    // return retour;
+    let retour = {
+        "countries": jsoncountries,
+        "type": typedata
+    };
+    return retour;
 }
 
 selectcountries = (namecountry) => {
@@ -109,7 +111,7 @@ selectcountries = (namecountry) => {
             lib.commit();
         })
         let datacountry = lib.queryAll('selectcountry');
-        console.log("datacountry", datacountry);
+        // console.log("datacountry", datacountry);
 
         let confirmedyest = datacountry[0].confirmed;
         let confirmtoday = datacountry[1].confirmed;
@@ -121,8 +123,8 @@ selectcountries = (namecountry) => {
         let totalconfirmed = confirmtoday - confirmedyest;
         let totaldeath = deathtoday - deathyest;
         let totalrecovered = recoveredtoday - recoveredyest;
-        console.log("totalconfirmed", totalconfirmed);
-        console.log("totaldeath", totaldeath);
-        console.log("totalrecovered", totalrecovered);
+        // console.log("totalconfirmed", totalconfirmed);
+        // console.log("totaldeath", totaldeath);
+        // console.log("totalrecovered", totalrecovered);
     })
 }

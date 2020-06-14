@@ -6,7 +6,9 @@
     </route>
   </router>
   <script>
-    const loc = window.location
+    const loc = window.location;
+
+
 
     export default {
       base: `${loc.protocol}//${loc.host}${loc.pathname ? loc.pathname : '' }`,
@@ -16,11 +18,27 @@
         todate: null,
         globalstats: null
       },
+      onBeforeMount(props, state) {
+        // before the component is mounted
+        let test = selectsummary();
+        console.log("test"+test);
+      },
       onMounted(props, state) {
-        state.countries = ({
-          date: "1"
-        })
-        this.update()
+        // right after the component is mounted on the page
+        let test = selectsummary();
+        console.log(test);
+      },
+      onBeforeUpdate(props, state) {
+        // allows recalculation of context data before the update
+      },
+      onUpdated(props, state) {
+        // right after the component template is updated after an update call
+      },
+      onBeforeUnmount(props, state) {
+        // before the component is removed
+      },
+      onUnmounted(props, state) {
+        // when the component is removed from the page
       }
     }
   </script>
