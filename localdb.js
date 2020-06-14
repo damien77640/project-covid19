@@ -12,7 +12,7 @@ createdb = () => {
     }
 }
 
-selectcountries = () => {
+selectsummary = () => {
     const lib = new localStorageDB("covid19", localStorage);
     let bool = false;
     let resQuery = lib.queryAll('todate');
@@ -35,7 +35,7 @@ selectcountries = () => {
     if (dayresQuery !== getDaysNow){
         bool = true;
     }
-    if (testhours > 6  && testdays === 0 ) {
+    if (testhours > 6) {
         bool = true;
     }
     if (bool === true) {
