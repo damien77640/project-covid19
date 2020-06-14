@@ -1,0 +1,28 @@
+Question 3 : L'opération AjoutDUnMalade peut-elle être définie ainsi :
+AjoutDUnMalade (mal) ≙
+ PRE mal ∉ Malades
+ THEN MALADE := MALADE ∪ {mal}
+ END
+Non :
+- mal ∉ Malades est insuffisant : il faut dire dans quel ensemble mal prend ses valeurs
+- cette opération ne respecte pas l’invariant appartient ∈ Malades ⟶ chambres (tout
+Malade appartient nécessairement à un chambre)
+Proposer une spécification correcte de l’opération AjoutDUnMalade.
+Il existe plusieurs solutions pour respecter l’invariant
+*** on ajoute un Malade donné dans un chambre donnée
+AjoutMalade (mal,cham) ≙
+ PRE mal ∈ MALADE – Malades ∧ cham ∈ chambres
+ THEN
+MALADES := MALADES ∪ {mal} ∥
+ chambre(mal) := cham
+ END
+**** on ajoute un Malade mais pour le moment on ne se préoccupe pas de son chambre. Il en a un,
+c’est tout. Quand on raffinera la spec, on précisera.
+AjoutMalade (mal) ≙
+ PRE mal ∈ MALADE – Malade ∧ chambre ≠ {}
+ THEN
+ MALADE:= MALADE ∪ {mal} ∥
+    ANY cham WHERE cham ∈ chambre
+        THEN chambre(mal) := cham ou chambre(mal) := choix(chambre)
+    END
+ END
