@@ -62,7 +62,7 @@ selectsummary = () => {
             lib.insert("globalstat", { newconfirmed: data.Global.NewConfirmed, totalconfirmed: data.Global.TotalConfirmed, newdeaths: data.Global.NewDeaths, totaldeaths: data.Global.TotalDeaths, newrecovered: data.Global.NewRecovered, totalrecovered: data.Global.TotalRecovered });
             lib.insert("todate", { date: data.Date })
             lib.insert("type", { "0": "string", "1": "string", "2": "string", "3": "number", "4": "number", "5": "number", "6": "number", "7": "number", "8": "number", "9": "string" });
-            let jsoncountries = lib.queryAll('countries');
+            jsoncountries = lib.queryAll('countries');
             // console.log("countries",jsoncountries);
             lib.commit();
 
@@ -82,6 +82,12 @@ selectsummary = () => {
         let dateresQuery = datesnow.getHours();
         console.log("dateresQuery", dateresQuery);
     }
+
+    let retour = {
+        "countries": jsoncountries,
+        "type": typedata
+    };
+    return retour;
 }
 
 selectcountries = (namecountry) => {
