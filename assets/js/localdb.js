@@ -183,7 +183,6 @@ selectcountries = (namecountry) => {
         datacountry = lib.queryAll('selectcountry');
         dadalen = datacountry.length
         let confirmtoday, confirmedyest, deathtoday, deathyest, recoveredtoday, recoveredyest;
-        
 
         confirmedyest = datacountry[dadalen - 2].confirmed
         confirmtoday = datacountry[dadalen - 1].confirmed
