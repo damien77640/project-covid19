@@ -1,7 +1,7 @@
 <chart>
     <h1>Salut c'est moi la chart de :</h1>
 <!--    TODO-->
-    <h2 id="codepi"/>
+    <h2 id="countryName"/>
     <div id="chartdiv" style="height: 80vh"></div>
     <script>
         export default {
@@ -17,6 +17,9 @@
                let infodate = new Date (infocountry[0].date);
                 console.log("infocountry",infocountry);
                 console.log("infodate",infodate.getMonth(), infodate.getDate());
+                let countryName = getCountryNameFromCountryCode(countrycode);
+
+                document.getElementById("countryName").innerText=countryName
                 am4core.ready(function () {
 
                     // Themes begin

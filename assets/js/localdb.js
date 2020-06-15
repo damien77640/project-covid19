@@ -126,7 +126,8 @@ selectsummary = () => {
 
     let retour = {
         "countries": jsoncountries,
-        "type": typedata
+        "type": typedata,
+        "globalstat": jsonglobalstat
     };
     return retour;
 }
@@ -156,6 +157,22 @@ getInfoCountries = (namecountry) => {
         datacountry = lib.queryAll('selectcountry');
     })
     return datacountry
+}
+
+getCountryNameFromCountryCode = (code) => {
+    const lib = new localStorageDB("covid19", localStorage);
+    let countryName = '';
+    let countries = lib.queryAll("countries");
+    // console.log("countries countryCode", countries)
+
+    for (let i = 0 ; i < countries.length ; i++){
+        country = countries[i];
+        if(country.countrycode == code){
+            countryName = country.country;
+            break;
+        }
+    }
+    return countryName;
 }
 
 selectcountries = (namecountry) => {

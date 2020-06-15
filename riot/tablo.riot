@@ -14,22 +14,25 @@
     </table>
     <script>
         export default {
-            onUpdated(props, state) {
-                console.log("prop",props)
+            onMounted(props,state){
+                console.log("prop",props.data.summary)
                 //TODO
-                // for (let numPays in props.data.table) {
-                //     let line = props.data.table[numPays]
-                //     // console.log(line);
-                //     let ligne = "<th>" + line.Country + "</th>"
-                //         + "<td>" + line.NewConfirmed + "</td>"
-                //         + "<td>" + line.NewRecovered + "</td>"
-                //         + "<td>" + line.NewDeaths + "</td>"
-                //         + "<td>" + line.TotalConfirmed + "</td>"
-                //         + "<td>" + line.TotalRecovered + "</td>"
-                //         + "<td>" + line.TotalDeaths + "</td>"
-                //     let code_pi=line.CountryCode
-                //     $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/"+code_pi+"';\">" + ligne + "</tr>");
-                // }
+                for (let numPays in props.data.summary.countries) {
+                    let line = props.data.summary.countries[numPays]
+                    // console.log(line);
+                    let ligne = "<th>" + line.country + "</th>"
+                        + "<td>" + line.newconfirmed + "</td>"
+                        + "<td>" + line.newrecovered + "</td>"
+                        + "<td>" + line.newdeaths + "</td>"
+                        + "<td>" + line.totalconfirmed + "</td>"
+                        + "<td>" + line.totalrecovered + "</td>"
+                        + "<td>" + line.totaldeaths + "</td>"
+                    let code_pi=line.countrycode
+                    $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/"+code_pi+"';\">" + ligne + "</tr>");
+                }
+            },
+            onUpdated(props, state) {
+                
             }
         }
     </script>
