@@ -1,76 +1,34 @@
 <tablo>
-    <h1 id="date"></h1>
-    <table class="table table-bordered table-hover table-condensed table-striped" id="tablocovid">
-        <tr each={ country in jsoncountries }> test </tr>
+    <table class="table table-bordered table-hover table-condensed table-striped" id="table">
+        <tr>
+            <th onclick="sortTable('1','country')">Pays</th>
+            <th onclick="sortTable('2','newconfirmed')">Cas</th>
+            <th onclick="sortTable('3','newrecovered')">Gueris</th>
+            <th onclick="sortTable('4','newdeaths')">Morts</th>
+            <th onclick="sortTable('5','totalconfirmed')">Cas Total</th>
+            <th onclick="sortTable('6','totalrecovered')">Guéris Total</th>
+            <th onclick="sortTable('7','totaldeaths')">Morts Total</th>
+        </tr>
+        <tbody>
+        </tbody>
     </table>
     <script>
-        let data;
-
         export default {
-            onBeforeMount(props, state) {
-                // before the component is mounted
-                console.log("bef");
-                let test = selectsummary();
-                console.log("test" + test);
-            },
-            onMounted(props, state) {
-                console.log("monted");
-
-                // right after the component is mounted on the page
-                console.log("props", props);
-                let data = selectsummary();
-                this.document.getElementById("date").innerHTML = "tamer"
-                // window.onload = function () {
-                //     this.document.getElementById("date").innerHTML = Date();
-                //     // Récupération des données choisis
-                //     var newConfirmed = data.Global.NewConfirmed;
-                //     var totalConfirmed = data.Global.TotalConfirmed;
-                //     // Affichage des résultats
-                //     var element = this.document.createElement("div");
-                //     element.textContent = "Il y a eu nb mort au total : " + newConfirmed +
-                //         " et le nb de cas confirmé est de " + totalConfirmed;
-
-                //     let table = this.document.getElementById("tablocovid");
-                //     let tr = this.document.createElement('tr');
-                //     tr.setAttribute('class', 'table-row');
-                //     let text = "";
-                //     let i = 0;
-                //     Object.entries(data.Countries[0]).forEach(([key, value]) => {
-                //         lowkey = key.toLowerCase();
-                //         text += "<th onclick=\"sortTable('" + i + "','" + lowkey + "')\">" + key + "</th>";
-                //         i++;
-                //     });
-                //     tr.innerHTML = text;
-                //     table.appendChild(tr);
-
-                //     data.Countries.forEach(obj => {
-                //         tr = this.document.createElement('tr');
-                //         tr.setAttribute('class', 'table-row');
-                //         Object.entries(obj).forEach(([key, value]) => {
-                //             let td = this.document.createElement('td');
-                //             td.innerText = `${value}`;
-                //             tr.appendChild(td);
-                //         })
-                //         table.appendChild(tr);
-                //     });
-                // }
-
-            },
-            onBeforeUpdate(props, state) {
-                console.log("befUp");
-
-                // allows recalculation of context data before the update
-            },
             onUpdated(props, state) {
-                console.log("Upda");
-
-                // right after the component template is updated after an update call
-            },
-            onBeforeUnmount(props, state) {
-                // before the component is removed
-            },
-            onUnmounted(props, state) {
-                // when the component is removed from the page
+                console.log(props)
+                //TODO
+                for (let numPays in props.data.table) {
+                    let line = props.data.table[numPays]
+                    let ligne = "<th>" + line.Country + "</th>"
+                        + "<td>" + line.NewConfirmed + "</td>"
+                        + "<td>" + line.NewRecovered + "</td>"
+                        + "<td>" + line.NewDeaths + "</td>"
+                        + "<td>" + line.TotalConfirmed + "</td>"
+                        + "<td>" + line.TotalRecovered + "</td>"
+                        + "<td>" + line.TotalDeaths + "</td>"
+                    let code_pi=line.CountryCode
+                    $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/"+code_pi+"';\">" + ligne + "</tr>");
+                }
             }
         }
     </script>

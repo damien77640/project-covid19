@@ -1,50 +1,43 @@
 <app>
-  <router base={base}>
+    <router base={base}>
+        <route path="(#|)">
+            <app-main data="{state.info}"/>
+            <tablo data="{state.info}"/>
+        </route>
+     <route path="#/pi/(.*)">
+            <chart/>
+        </route>
+    </router>
+    <script>
+        const loc = window.location
+        export default {
+        base: `${loc.protocol}//${loc.host}${loc.pathname ? loc.pathname : ''}`,
+            onBeforeMount(props, state) {
+                state.info = ({
+                    date: "???",
+                })
+                var point = this
+                var settings = {
+                    "url": "https://api.covid19api.com/summary",
+                    "method": "GET",
+                    "timeout": 0,
+                };
 
-    <route path="#/tablo">
-      <tablo content={state.countries}></tablo>
-    </route>
-    <route path="#/tablo">
-      <tablo content={state.countries}></tablo>
-    </route>
-  </router>
-  <script>
-    const loc = window.location;
-
-
-
-    export default {
-      base: `${loc.protocol}//${loc.host}${loc.pathname ? loc.pathname : '' }`,
-      state: {
-        countries: null,
-        types: null,
-        todate: null,
-        globalstats: null
-      },
-      onBeforeMount(props, state) {
-        // before the component is mounted
-        let test = selectsummary();
-        console.log("test" + test);
-      },
-      onMounted(props, state) {
-        // right after the component is mounted on the page
-        state.countries = ({
-          date: '1'
-        })
-        this.update();
-      },
-      onBeforeUpdate(props, state) {
-        // allows recalculation of context data before the update
-      },
-      onUpdated(props, state) {
-        // right after the component template is updated after an update call
-      },
-      onBeforeUnmount(props, state) {
-        // before the component is removed
-      },
-      onUnmounted(props, state) {
-        // when the component is removed from the page
-      }
-    }
-  </script>
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                    state.info = ({
+                        date: response.Date,
+                        covidedGlobal: response.Global.TotalConfirmed,
+                        deathGlobal: response.Global.TotalDeaths,
+                        healedGlobal: response.Global.TotalRecovered,
+                        covidedToday: response.Global.NewConfirmed,
+                        deathToday: response.Global.NewDeaths,
+                        healedToday: response.Global.NewRecovered,
+                        table: response.Countries
+                    })
+                    point.update()
+                });
+            }
+        }
+    </script>
 </app>
