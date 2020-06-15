@@ -1,6 +1,10 @@
 function sortTable(n, col) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("tablocovid");
+    
+    let types = getTypes();
+    console.log("types", types);
+    console.log(typedata);
     switching = true;
     // Set the sorting direction to ascending:
     dir = "asc";

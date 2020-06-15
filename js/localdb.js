@@ -169,3 +169,8 @@ selectcountries = (namecountry) => {
         // console.log("totalrecovered", totalrecovered);
     })
 }
+
+getTypes = () => {
+    let types = lib.queryAll("type")
+    return types;
+}
