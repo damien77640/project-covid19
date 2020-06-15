@@ -171,6 +171,7 @@ selectcountries = (namecountry) => {
 }
 
 selectTypes = () => {
+    const lib = new localStorageDB("covid19", localStorage);
     let types = lib.queryAll("type");
     return types;
 }
