@@ -15,6 +15,7 @@
             onBeforeMount(props, state) {
                 state.info = ({
                     date: "???",
+                    summary: {}
                 })
                 var point = this
                 let name = 'france';
@@ -23,8 +24,12 @@
                 let countries = selectcountries(name); // ça marche aussi
                 let infocountry = getInfoCountries(name); // ça marche
                 let countryName = getCountryNameFromCountryCode("AT"); // ça marche ça
-                state.info =  selectsummary();
-                // console.log("state", state);
+                state.info.summary =  selectsummary();
+                console.log("summary", state.info.summary);
+                state.info.date = new Date();
+                // state.info.test = [{ title:'First item', done: true },{ title:'Second item'},{ title:'Third item'}]
+                // console.log("props", props);
+                
             }
         }
     </script>

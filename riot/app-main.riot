@@ -8,17 +8,17 @@
   <div>
     <h2>Total</h2>
     <ul>
-      <li>Cas : { props.data.covidedGlobal }</li>
-      <li>Morts : { props.data.deathGlobal }</li>
-      <li>Guéris : { props.data.healedGlobal }</li>
+      <li>Cas : { props.data.summary.globalstat[0].totalconfirmed }</li>
+      <li>Morts : { props.data.summary.globalstat[0].totaldeaths }</li>
+      <li>Guéris : { props.data.summary.globalstat[0].totalrecovered }</li>
     </ul>
   </div>
   <div>
     <h2>Aujourd'hui</h2>
     <ul>
-      <li>Cas : { props.data.covidedToday }</li>
-      <li>Morts : { props.data.deathToday }</li>
-      <li>Guéris : { props.data.healedToday }</li>
+      <li>Cas : { props.data.summary.globalstat[0].newconfirmed }</li>
+      <li>Morts : { props.data.summary.globalstat[0].newdeaths }</li>
+      <li>Guéris : { props.data.summary.globalstat[0].newrecovered }</li>
     </ul>
   </div>
 

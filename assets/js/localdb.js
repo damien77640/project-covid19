@@ -126,7 +126,8 @@ selectsummary = () => {
 
     let retour = {
         "countries": jsoncountries,
-        "type": typedata
+        "type": typedata,
+        "globalstat": jsonglobalstat
     };
     return retour;
 }
@@ -162,7 +163,7 @@ getCountryNameFromCountryCode = (code) => {
     const lib = new localStorageDB("covid19", localStorage);
     let countryName = '';
     let countries = lib.queryAll("countries");
-    console.log("countries countryCode", countries)
+    // console.log("countries countryCode", countries)
 
     for (let i = 0 ; i < countries.length ; i++){
         country = countries[i];
