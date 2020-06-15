@@ -1,14 +1,16 @@
 <chart>
     <h1>Salut c'est moi la chart de :</h1>
 <!--    TODO-->
-    <h2 id="codepi"/>
+    <h2 id="countryName"/>
     <div id="chartdiv" style="height: 80vh"></div>
     <script>
         export default {
             onMounted(props, state) {
                 let href = location.href;
                 let countrycode = href.match(/([^\/]*)\/*$/)[1];
-                document.getElementById("codepi").innerText=countrycode
+                let countryName = getCountryNameFromCountryCode(countrycode);
+
+                document.getElementById("countryName").innerText=countryName
                 am4core.ready(function () {
 
                     // Themes begin
