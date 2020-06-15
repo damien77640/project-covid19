@@ -17,30 +17,12 @@
                     date: "???",
                 })
                 var point = this
-                var settings = {
-                    "url": "https://api.covid19api.com/summary",
-                    "method": "GET",
-                    "timeout": 0,
-                };
-
-                $.ajax(settings).done(function (response) {
-                    // console.log(response);
-                    state.info = ({
-                        date: response.Date,
-                        covidedGlobal: response.Global.TotalConfirmed,
-                        deathGlobal: response.Global.TotalDeaths,
-                        healedGlobal: response.Global.TotalRecovered,
-                        covidedToday: response.Global.NewConfirmed,
-                        deathToday: response.Global.NewDeaths,
-                        healedToday: response.Global.NewRecovered,
-                        table: response.Countries
-                    })
-                    point.update()
-                });
                 let name = 'france';
                 createdb();
                 selectsummary();
                 selectcountries(name);
+                    state.info =  selectsummary();
+
             }
         }
     </script>
