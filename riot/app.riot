@@ -20,9 +20,11 @@
                 let name = 'france';
                 createdb();
                 selectsummary();
-                selectcountries(name);
-                    state.info =  selectsummary();
-
+                let countries = selectcountries(name); // ça marche aussi
+                let infocountry = getInfoCountries(name); // ça marche
+                console.log("infocountry", infocountry)
+                state.info =  selectsummary();
+                console.log(state);
             }
         }
     </script>

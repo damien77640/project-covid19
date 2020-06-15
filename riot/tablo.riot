@@ -17,19 +17,19 @@
             onUpdated(props, state) {
                 console.log("prop",props)
                 //TODO
-                for (let numPays in props.data.table) {
-                    let line = props.data.table[numPays]
-                    // console.log(line);
-                    let ligne = "<th>" + line.Country + "</th>"
-                        + "<td>" + line.NewConfirmed + "</td>"
-                        + "<td>" + line.NewRecovered + "</td>"
-                        + "<td>" + line.NewDeaths + "</td>"
-                        + "<td>" + line.TotalConfirmed + "</td>"
-                        + "<td>" + line.TotalRecovered + "</td>"
-                        + "<td>" + line.TotalDeaths + "</td>"
-                    let code_pi=line.CountryCode
-                    $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/"+code_pi+"';\">" + ligne + "</tr>");
-                }
+                // for (let numPays in props.data.table) {
+                //     let line = props.data.table[numPays]
+                //     // console.log(line);
+                //     let ligne = "<th>" + line.Country + "</th>"
+                //         + "<td>" + line.NewConfirmed + "</td>"
+                //         + "<td>" + line.NewRecovered + "</td>"
+                //         + "<td>" + line.NewDeaths + "</td>"
+                //         + "<td>" + line.TotalConfirmed + "</td>"
+                //         + "<td>" + line.TotalRecovered + "</td>"
+                //         + "<td>" + line.TotalDeaths + "</td>"
+                //     let code_pi=line.CountryCode
+                //     $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/"+code_pi+"';\">" + ligne + "</tr>");
+                // }
             }
         }
     </script>

@@ -26,7 +26,7 @@ selectsummary = () => {
         // console.log("datesnow", datesnow);
         let dateresQuery = datesnow.getHours();
         dayresQuery = datesnow.getDay();
-        console.log("dayresQuery", dayresQuery);
+        // console.log("dayresQuery", dayresQuery);
         // console.log("dateresQuery", dateresQuery);
 
         let date = new Date;
@@ -34,22 +34,22 @@ selectsummary = () => {
         let getDaysNow = date.getDay();
         let testday = getDaysNow - dayresQuery;
         // console.log("getHoursNow", getHoursNow);
-        console.log("getDaysNow", getDaysNow);
+        // console.log("getDaysNow", getDaysNow);
         testhours = getHoursNow - dateresQuery;
-        console.log("testhours",testhours);
-        console.log("testdayyyyy",testday);
+        // console.log("testhours",testhours);
+        // console.log("testdayyyyy",testday);
 
     if (testday !== 0) {
-        console.log("differnce jour", testday);
+        // console.log("differnce jour", testday);
         bool = false;
     } else if (testhours > 6) {
-        console.log("differnce heure",bool);
+        // console.log("differnce heure",bool);
         bool = false;
     }
 }
     if (lib.rowCount("countries") === 0 || bool === false) {  
-        console.log("falssssse", lib.rowCount("countries") === 0);
-        console.log("cete merde", bool);
+        // console.log("falssssse", lib.rowCount("countries") === 0);
+        // console.log("cete merde", bool);
         var settings = {
             async: false,
             "url": "https://api.covid19api.com/summary",
@@ -106,7 +106,7 @@ selectsummary = () => {
         bool = true;
     }
     if (bool === true) {
-        console.log("trueeeee");
+        // console.log("trueeeee");
         jsoncountries = lib.queryAll('countries');
         typedata = lib.queryAll("type");
         // console.log("countries",jsoncountries);
@@ -114,9 +114,9 @@ selectsummary = () => {
         typedata = lib.queryAll('type');
         // console.log("typedata", typedata);
         jsoncountries = lib.queryAll('countries');
-        console.log("jsoncountries", jsoncountries);
+        // console.log("jsoncountries", jsoncountries);
         jsonglobalstat = lib.queryAll('globalstat');
-        console.log("jsonglobalstat", jsonglobalstat);
+        // console.log("jsonglobalstat", jsonglobalstat);
 
         resQuery = lib.queryAll('todate');
         datesnow = new Date(resQuery[0].date);
@@ -124,15 +124,44 @@ selectsummary = () => {
         // console.log("dateresQuery", dateresQuery);
     }
 
-    // let retour = {
-    //     "countries": jsoncountries,
-    //     "type": typedata
-    // };
-    // return retour;
+    let retour = {
+        "countries": jsoncountries,
+        "type": typedata
+    };
+    return retour;
+}
+
+getInfoCountries = (namecountry) => {
+    const lib = new localStorageDB("covid19", localStorage);
+    let datacountry = {}
+    var settings = {
+        "url": "https://api.covid19api.com/total/country/" + namecountry,
+        "method": "GET",
+        "timeout": 0,
+        "async": false
+    };
+    $.ajax(settings).done(function (response) {
+        let data = response;
+        lib.deleteRows("selectcountry");
+        data.forEach(element => {
+            lib.insert("selectcountry", {
+                country: element.Country,
+                confirmed: element.Confirmed,
+                deaths: element.Deaths,
+                recovered: element.Recovered,
+                date: element.Date
+            });
+            lib.commit();
+        })
+        datacountry = lib.queryAll('selectcountry');
+    })
+    return datacountry
 }
 
 selectcountries = (namecountry) => {
     const lib = new localStorageDB("covid19", localStorage);
+    let datacountry = {};
+    let infocountry = {}
     var settings = {
         "url": "https://api.covid19api.com/total/country/" + namecountry,
         "method": "GET",
@@ -151,23 +180,31 @@ selectcountries = (namecountry) => {
             });
             lib.commit();
         })
-        let datacountry = lib.queryAll('selectcountry');
-        console.log("datacountry", datacountry);
+        datacountry = lib.queryAll('selectcountry');
+        dadalen = datacountry.length
+        let confirmtoday, confirmedyest, deathtoday, deathyest, recoveredtoday, recoveredyest;
+        
 
-        let confirmedyest = datacountry[0].confirmed;
-        let confirmtoday = datacountry[1].confirmed;
-        let deathyest = datacountry[0].deaths;
-        let deathtoday = datacountry[1].deaths;
-        let recoveredyest = datacountry[0].recovered;
-        let recoveredtoday = datacountry[1].recovered;
+        confirmedyest = datacountry[dadalen - 2].confirmed
+        confirmtoday = datacountry[dadalen - 1].confirmed
+        deathyest = datacountry[dadalen - 2].deaths
+        deathtoday = datacountry[dadalen - 1].deaths
+        recoveredyest = datacountry[dadalen - 2].recovered
+        recoveredtoday = datacountry[dadalen - 1].recovered
 
-        let totalconfirmed = confirmtoday - confirmedyest;
-        let totaldeath = deathtoday - deathyest;
-        let totalrecovered = recoveredtoday - recoveredyest;
-        // console.log("totalconfirmed", totalconfirmed);
-        // console.log("totaldeath", totaldeath);
-        // console.log("totalrecovered", totalrecovered);
+        infocountry.confirmedyest = confirmedyest
+        infocountry.confirmtoday = confirmtoday
+        infocountry.deathyest = deathyest
+        infocountry.deathtoday = deathtoday
+        infocountry.recoveredyest = recoveredyest
+        infocountry.recoveredtoday = recoveredtoday
+
+
+        infocountry.suppconfirmed = confirmtoday - confirmedyest;
+        infocountry.suppdeath = deathtoday - deathyest;
+        infocountry.supprecovered = recoveredtoday - recoveredyest;
     })
+    return infocountry
 }
 
 selectTypes = () => {
