@@ -19,31 +19,37 @@ selectsummary = () => {
     let dayresQuery = '';
     let getDaysNow = '';
     let testhours = '';
+    let testday = '';
     let resQuery = lib.queryAll('todate');
     if (resQuery[0] !== undefined) {
-        bool = false;
-
-        // console.log("re", resQuery);
         let datesnow = new Date(resQuery[0].date);
         // console.log("datesnow", datesnow);
         let dateresQuery = datesnow.getHours();
         dayresQuery = datesnow.getDay();
-        // console.log("dayresQuery", dayresQuery);
+        console.log("dayresQuery", dayresQuery);
         // console.log("dateresQuery", dateresQuery);
 
         let date = new Date;
         let getHoursNow = date.getHours();
         let getDaysNow = date.getDay();
+        let testday = getDaysNow - dayresQuery;
         // console.log("getHoursNow", getHoursNow);
-        // console.log("getDaysNow", getDaysNow);
+        console.log("getDaysNow", getDaysNow);
         testhours = getHoursNow - dateresQuery;
-    }
-    if (dayresQuery !== getDaysNow) {
+        console.log("testhours",testhours);
+        console.log("testdayyyyy",testday);
+
+    if (testday !== 0) {
+        console.log("differnce jour", testday);
         bool = false;
     } else if (testhours > 6) {
+        console.log("differnce heure",bool);
         bool = false;
     }
-    if (bool === true) {
+}
+    if (lib.rowCount("countries") === 0 || bool === false) {  
+        console.log("falssssse", lib.rowCount("countries") === 0);
+        console.log("cete merde", bool);
         var settings = {
             async: false,
             "url": "https://api.covid19api.com/summary",
@@ -53,9 +59,8 @@ selectsummary = () => {
 
         $.ajax(settings).done(function (response) {
             let data = response;
-            // console.log("data",data);
+            lib.deleteRows("countries");
             data.Countries.forEach(element => {
-                // console.log("tazmer", element);
                 lib.insert("countries", {
                     country: element.Country,
                     countrycode: element.CountryCode,
@@ -97,21 +102,21 @@ selectsummary = () => {
                 "8": "number",
                 "9": "string"
             });
-            jsoncountries = lib.queryAll('countries');
-            typedata = lib.queryAll("type");
-            // console.log("countries",jsoncountries);
-            lib.commit();
-            bool = false;
-
-        });
+        })
+        bool = true;
     }
-    if (bool === false) {
+    if (bool === true) {
+        console.log("trueeeee");
+        jsoncountries = lib.queryAll('countries');
+        typedata = lib.queryAll("type");
+        // console.log("countries",jsoncountries);
+        lib.commit();
         typedata = lib.queryAll('type');
         // console.log("typedata", typedata);
         jsoncountries = lib.queryAll('countries');
         console.log("jsoncountries", jsoncountries);
         jsonglobalstat = lib.queryAll('globalstat');
-        // console.log("jsonglobalstat", jsonglobalstat);
+        console.log("jsonglobalstat", jsonglobalstat);
 
         resQuery = lib.queryAll('todate');
         datesnow = new Date(resQuery[0].date);
@@ -119,11 +124,11 @@ selectsummary = () => {
         // console.log("dateresQuery", dateresQuery);
     }
 
-    let retour = {
-        "countries": jsoncountries,
-        "type": typedata
-    };
-    return retour;
+    // let retour = {
+    //     "countries": jsoncountries,
+    //     "type": typedata
+    // };
+    // return retour;
 }
 
 selectcountries = (namecountry) => {
@@ -147,7 +152,7 @@ selectcountries = (namecountry) => {
             lib.commit();
         })
         let datacountry = lib.queryAll('selectcountry');
-        // console.log("datacountry", datacountry);
+         console.log("datacountry", datacountry);
 
         let confirmedyest = datacountry[0].confirmed;
         let confirmtoday = datacountry[1].confirmed;
