@@ -1,25 +1,35 @@
 <app-main>
   <style>
-    table, th, td {
+    table,
+    th,
+    td {
       border: 1px solid black;
     }
   </style>
-  <h1>{ props.data.date }</h1>
-  <div>
-    <h2>Total</h2>
-    <ul>
-      <li>Cas : { props.data.summary.globalstat[0].totalconfirmed }</li>
-      <li>Morts : { props.data.summary.globalstat[0].totaldeaths }</li>
-      <li>Guéris : { props.data.summary.globalstat[0].totalrecovered }</li>
-    </ul>
-  </div>
-  <div>
-    <h2>Aujourd'hui</h2>
-    <ul>
-      <li>Cas : { props.data.summary.globalstat[0].newconfirmed }</li>
-      <li>Morts : { props.data.summary.globalstat[0].newdeaths }</li>
-      <li>Guéris : { props.data.summary.globalstat[0].newrecovered }</li>
-    </ul>
+  <div class="m-5">
+    <h1>Dada et Godo le : { props.data.date }</h1>
+    <div class="container">
+      <div class="row justify-content-start">
+        <div class="col-2">
+        <h2>Total</h2>
+        <ul>
+          <li>Cas : { props.data.summary.globalstat[0].totalconfirmed }</li>
+          <li>Morts : { props.data.summary.globalstat[0].totaldeaths }</li>
+          <li>Guéris : { props.data.summary.globalstat[0].totalrecovered }</li>
+        </ul>
+        </div>
+      </>
+      <div>
+      <div class="col">
+        <h2>Aujourd'hui</h2>
+        <ul>
+          <li>Cas : { props.data.summary.globalstat[0].newconfirmed }</li>
+          <li>Morts : { props.data.summary.globalstat[0].newdeaths }</li>
+          <li>Guéris : { props.data.summary.globalstat[0].newrecovered }</li>
+        </ul>
+      </div>
+      </div>
+    </div>
   </div>
 
 </app-main>

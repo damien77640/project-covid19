@@ -1,48 +1,46 @@
 <tablo>
-    <table class="table table-bordered table-hover table-condensed table-striped" id="tablocovid">
-        <thead>
-            <tr>
-                <th>Pays</th>
-                <th>Cas</th>
-                <th>Gueris</th>
-                <th>Morts</th>
-                <th>Cas Total</th>
-                <th>Guéris Total</th>
-                <th>Morts Total</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="m-5">
+        <table class="table table-bordered table-hover table-condensed table-striped" id="tablocovid">
+            <thead>
+                <tr>
+                    <th>Pays</th>
+                    <th>Cas</th>
+                    <th>Gueris</th>
+                    <th>Morts</th>
+                    <th>Cas Total</th>
+                    <th>Guéris Total</th>
+                    <th>Morts Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
     <script>
-        
         export default {
-            onMounted(props,state){
-                console.log("prop",props.data.summary)
+            onMounted(props, state) {
                 //TODO
                 let header = "";
+                let row  =  "";
+                for (let index = 0 ; index < props.data.summary.countries.length ; index++) {
+                    let currentCountry = props.data.summary.countries[index]
+                    row += "<th>" + currentCountry.country + "</th>"
+                    row += "<td>" + currentCountry.newconfirmed + "</td>"
+                    row += "<td>" + currentCountry.newrecovered + "</td>"
+                    row += "<td>" + currentCountry.newdeaths + "</td>"
+                    row += "<td>" + currentCountry.totalconfirmed + "</td>"
+                    row += "<td>" + currentCountry.totalrecovered + "</td>"
+                    row += "<td>" + currentCountry.totaldeaths + "</td>"
 
-                for (let numPays in props.data.summary.countries) {
-                    let line = props.data.summary.countries[numPays]
-                    // console.log(line);
-                    
-
-                    let ligne = "<th>" + line.country + "</th>"
-                        + "<td>" + line.newconfirmed + "</td>"
-                        + "<td>" + line.newrecovered + "</td>"
-                        + "<td>" + line.newdeaths + "</td>"
-                        + "<td>" + line.totalconfirmed + "</td>"
-                        + "<td>" + line.totalrecovered + "</td>"
-                        + "<td>" + line.totaldeaths + "</td>"
-                    let code_pi=line.countrycode
-                    $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/"+code_pi+"';\">" + ligne + "</tr>");
+                    let code_pi = currentCountry.countrycode
+                    $('table').find('tbody').append("<tr onclick=\"location.href='./#/pi/" + code_pi + "';\">" + row  +  "</tr>");
                 }
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#tablocovid').DataTable();
-                } );
+                });
             },
             onUpdated(props, state) {
-                
+
             }
         }
     </script>

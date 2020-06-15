@@ -23,33 +23,23 @@ selectsummary = () => {
     let resQuery = lib.queryAll('todate');
     if (resQuery[0] !== undefined) {
         let datesnow = new Date(resQuery[0].date);
-        // console.log("datesnow", datesnow);
+        
         let dateresQuery = datesnow.getHours();
         dayresQuery = datesnow.getDay();
-        // console.log("dayresQuery", dayresQuery);
-        // console.log("dateresQuery", dateresQuery);
 
         let date = new Date;
         let getHoursNow = date.getHours();
         let getDaysNow = date.getDay();
         let testday = getDaysNow - dayresQuery;
-        // console.log("getHoursNow", getHoursNow);
-        // console.log("getDaysNow", getDaysNow);
         testhours = getHoursNow - dateresQuery;
-        // console.log("testhours",testhours);
-        // console.log("testdayyyyy",testday);
 
     if (testday !== 0) {
-        // console.log("differnce jour", testday);
         bool = false;
     } else if (testhours > 6) {
-        // console.log("differnce heure",bool);
         bool = false;
     }
 }
     if (lib.rowCount("countries") === 0 || bool === false) {  
-        // console.log("falssssse", lib.rowCount("countries") === 0);
-        // console.log("cete merde", bool);
         var settings = {
             async: false,
             "url": "https://api.covid19api.com/summary",
@@ -106,22 +96,16 @@ selectsummary = () => {
         bool = true;
     }
     if (bool === true) {
-        // console.log("trueeeee");
         jsoncountries = lib.queryAll('countries');
         typedata = lib.queryAll("type");
-        // console.log("countries",jsoncountries);
         lib.commit();
         typedata = lib.queryAll('type');
-        // console.log("typedata", typedata);
         jsoncountries = lib.queryAll('countries');
-        // console.log("jsoncountries", jsoncountries);
         jsonglobalstat = lib.queryAll('globalstat');
-        // console.log("jsonglobalstat", jsonglobalstat);
 
         resQuery = lib.queryAll('todate');
         datesnow = new Date(resQuery[0].date);
         dateresQuery = datesnow.getHours();
-        // console.log("dateresQuery", dateresQuery);
     }
 
     let retour = {
@@ -166,7 +150,6 @@ getCountryNameFromCountryCode = (code) => {
     const lib = new localStorageDB("covid19", localStorage);
     let countryName = '';
     let countries = lib.queryAll("countries");
-    // console.log("countries countryCode", countries)
 
     for (let i = 0 ; i < countries.length ; i++){
         country = countries[i];

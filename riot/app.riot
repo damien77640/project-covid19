@@ -23,10 +23,9 @@
                 let infocountry = getInfoCountries(name); // ça marche
                 let countryName = getCountryNameFromCountryCode("AT"); // ça marche ça
                 state.info.summary =  selectsummary();
-                console.log("summary", state.info.summary);
-                state.info.date = new Date();
+                let date = new Date();
+                state.info.date = date.toLocaleDateString();
                 // state.info.test = [{ title:'First item', done: true },{ title:'Second item'},{ title:'Third item'}]
-                // console.log("props", props);
                 
             }
         }
