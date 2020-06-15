@@ -138,7 +138,7 @@ getInfoCountries = (namecountry) => {
     if(namecountry === ""){
         namecountry = "france"
     }
-    var settings = {
+    var settings = { // a modif plus tard psk c'est dégeu (jamais)
         "url": "https://api.covid19api.com/total/country/" + namecountry,
         "method": "GET",
         "timeout": 0,
@@ -182,7 +182,7 @@ selectcountries = (namecountry) => {
     const lib = new localStorageDB("covid19", localStorage);
     let datacountry = {};
     let infocountry = {}
-    if(namecountry === ""){
+    if(namecountry === ""){ // a modif plus tard psk c'est dégeu
         namecountry = "france"
     }
     var settings = {
