@@ -8,15 +8,15 @@
             onMounted(props, state) {
                 let href = location.href;
                 let countrycode = href.match(/([^\/]*)\/*$/)[1];
-                document.getElementById("codepi").innerText=countrycode
+                document.getElementById("countryName").innerText=countrycode
                 let name = countrycode;
                let infocountry = getInfoCountries(name);
                let infoconf = infocountry[0].confirmed;
                let infodeath = infocountry[0].deaths;
                let inforeco = infocountry[0].recovered;
                let infodate = new Date (infocountry[0].date);
-                console.log("infocountry",infocountry);
-                console.log("infodate",infodate.getMonth(), infodate.getDate());
+               let realdate =  infodate.toLocaleDateString();
+               
                 let countryName = getCountryNameFromCountryCode(countrycode);
 
                 document.getElementById("countryName").innerText=countryName
@@ -33,7 +33,7 @@
                     let price1 = infoconf, price2 = infodeath, price3 = inforeco;
                     for (let i = 0; i < infocountry.length; i++) {
                         price1 = infocountry[i].confirmed;
-                        data.push({ date1: new Date(infodate, 0, i), price1: price1 });
+                        data.push({ date1: new Date(2015, 0, i), price1: price1 });
                     }
                     for (let i = 0; i < infocountry.length; i++) {
                         price2 = infocountry[i].deaths;
