@@ -152,7 +152,7 @@ selectcountries = (namecountry) => {
             lib.commit();
         })
         let datacountry = lib.queryAll('selectcountry');
-         console.log("datacountry", datacountry);
+        console.log("datacountry", datacountry);
 
         let confirmedyest = datacountry[0].confirmed;
         let confirmtoday = datacountry[1].confirmed;
