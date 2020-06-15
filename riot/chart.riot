@@ -9,6 +9,14 @@
                 let href = location.href;
                 let countrycode = href.match(/([^\/]*)\/*$/)[1];
                 document.getElementById("codepi").innerText=countrycode
+                let name = countrycode;
+               let infocountry = getInfoCountries(name);
+               let infoconf = infocountry[0].confirmed;
+               let infodeath = infocountry[0].deaths;
+               let inforeco = infocountry[0].recovered;
+               let infodate = new Date (infocountry[0].date);
+                console.log("infocountry",infocountry);
+                console.log("infodate",infodate.getMonth(), infodate.getDate());
                 am4core.ready(function () {
 
                     // Themes begin
@@ -16,58 +24,57 @@
                     // Themes end
 
                     // Create chart
-                    var chart = am4core.create("chartdiv", am4charts.XYChart);
+                    let chart = am4core.create("chartdiv", am4charts.XYChart);
 
-                    var data = [];
-                    var price1 = 1000, price2 = 1200, price3 = 1400;
-                    var quantity = 30000;
-                    for (var i = 0; i < 360; i++) {
-                        price1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-                        data.push({date1: new Date(2015, 0, i), price1: price1});
+                    let data = [];
+                    let price1 = infoconf, price2 = infodeath, price3 = inforeco;
+                    for (let i = 0; i < infocountry.length; i++) {
+                        price1 = infocountry[i].confirmed;
+                        data.push({ date1: new Date(infodate, 0, i), price1: price1 });
                     }
-                    for (var i = 0; i < 360; i++) {
-                        price2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-                        data.push({date2: new Date(2017, 0, i), price2: price2});
-                    }
-                    for (var i = 0; i < 360; i++) {
-                        price3 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
-                        data.push({date3: new Date(2019, 0, i), price3: price3});
+                    for (let i = 0; i < infocountry.length; i++) {
+                        price2 = infocountry[i].deaths;
+                        data.push({ date2: new Date(2017, 0, i), price2: price2 });
+}
+                    for (let i = 0; i < infocountry.length; i++) {
+                        price3 = infocountry[i].recovered;
+                        data.push({ date3: new Date(2019, 0, i), price3: price3 });
                     }
 
                     chart.data = data;
 
-                    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+                    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
                     dateAxis.renderer.grid.template.location = 0;
                     dateAxis.renderer.labels.template.fill = am4core.color("#e59165");
 
-                    var dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+                    let dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
                     dateAxis2.renderer.grid.template.location = 0;
                     dateAxis2.renderer.labels.template.fill = am4core.color("#dfcc64");
 
-                    var dateAxis3 = chart.xAxes.push(new am4charts.DateAxis());
+                    let dateAxis3 = chart.xAxes.push(new am4charts.DateAxis());
                     dateAxis3.renderer.grid.template.location = 0;
                     dateAxis3.renderer.labels.template.fill = am4core.color("#2C7E3D");
 
-                    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
                     valueAxis.tooltip.disabled = true;
                     valueAxis.renderer.labels.template.fill = am4core.color("#e59165");
 
                     valueAxis.renderer.minWidth = 60;
 
-                    var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+                    let valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
                     valueAxis2.tooltip.disabled = true;
                     valueAxis2.renderer.labels.template.fill = am4core.color("#dfcc64");
                     valueAxis2.renderer.minWidth = 60;
                     valueAxis2.syncWithAxis = valueAxis;
 
-                    var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
+                    let valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
                     valueAxis3.tooltip.disabled = true;
                     valueAxis3.renderer.labels.template.fill = am4core.color("#2C7E3D");
                     valueAxis3.renderer.minWidth = 60;
                     valueAxis3.syncWithAxis = valueAxis;
 
-                    var series = chart.series.push(new am4charts.LineSeries());
-                    series.name = "2015";
+                    let series = chart.series.push(new am4charts.LineSeries());
+                    series.name = "Cas";
                     series.dataFields.dateX = "date1";
                     series.dataFields.valueY = "price1";
                     series.tooltipText = "{valueY.value}";
@@ -75,8 +82,8 @@
                     series.stroke = am4core.color("#e59165");
                     //series.strokeWidth = 3;
 
-                    var series2 = chart.series.push(new am4charts.LineSeries());
-                    series2.name = "2017";
+                    let series2 = chart.series.push(new am4charts.LineSeries());
+                    series2.name = "Morts";
                     series2.dataFields.dateX = "date2";
                     series2.dataFields.valueY = "price2";
                     series2.yAxis = valueAxis2;
@@ -86,8 +93,8 @@
                     series2.stroke = am4core.color("#dfcc64");
                     //series2.strokeWidth = 3;
 
-                    var series3 = chart.series.push(new am4charts.LineSeries());
-                    series3.name = "2019";
+                    let series3 = chart.series.push(new am4charts.LineSeries());
+                    series3.name = "Guéris";
                     series3.dataFields.dateX = "date3";
                     series3.dataFields.valueY = "price3";
                     series3.yAxis = valueAxis3;
@@ -100,7 +107,7 @@
                     chart.cursor = new am4charts.XYCursor();
                     chart.cursor.xAxis = dateAxis2;
 
-                    var scrollbarX = new am4charts.XYChartScrollbar();
+                    let scrollbarX = new am4charts.XYChartScrollbar();
                     scrollbarX.series.push(series);
                     chart.scrollbarX = scrollbarX;
 
