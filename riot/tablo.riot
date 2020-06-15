@@ -23,6 +23,7 @@
                 let header = "";
                 let row  =  "";
                 for (let index = 0 ; index < props.data.summary.countries.length ; index++) {
+                    row = ""
                     let currentCountry = props.data.summary.countries[index]
                     row += "<th>" + currentCountry.country + "</th>"
                     row += "<td>" + currentCountry.newconfirmed + "</td>"
