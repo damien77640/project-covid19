@@ -135,6 +135,9 @@ selectsummary = () => {
 getInfoCountries = (namecountry) => {
     const lib = new localStorageDB("covid19", localStorage);
     let datacountry = {}
+    if(namecountry === ""){
+        namecountry = "france"
+    }
     var settings = {
         "url": "https://api.covid19api.com/total/country/" + namecountry,
         "method": "GET",
@@ -179,6 +182,9 @@ selectcountries = (namecountry) => {
     const lib = new localStorageDB("covid19", localStorage);
     let datacountry = {};
     let infocountry = {}
+    if(namecountry === ""){
+        namecountry = "france"
+    }
     var settings = {
         "url": "https://api.covid19api.com/total/country/" + namecountry,
         "method": "GET",
